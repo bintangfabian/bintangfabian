@@ -3,8 +3,6 @@
 a Software Engineer driven by curiosity and a constant desire to learn new things about technology.
 My interests span across Front-End Web, Mobile Applications, and IoT systems, where I love turning complex ideas into simple, functional solutions.
 
-I’m currently developing a Mobile Application POS System, a modern point-of-sale system designed to make business management simpler and smarter.
-
 - 💬 Feel free to ask me about colaboration project
 - 📫 How to reach me **bintangalfin33@gmail.com**
 - ⚡ Fun fact **I love learning something new**
