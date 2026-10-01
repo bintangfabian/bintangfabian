@@ -1,0 +1,13 @@
+{
+  "name": "bintangfabian",
+  "private": true,
+  "type": "module",
+  "description": "Generates the animated SVG assets used by the GitHub profile README.",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "opentype.js": "^2.0.0",
+    "simple-icons": "^16.33.0"
+  }
+}
