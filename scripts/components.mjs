@@ -76,6 +76,7 @@ function arc(cx, cy, r, a1, a2) {
 const ICONS = {
   arrow: (c, w = 1.8) => `<path d="M7 17L17 7M9 7h8v8" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`,
   mail: (c) => `<rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="${c}" stroke-width="1.8"/><path d="M4 7.5l8 5.5 8-5.5" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`,
+  globe: (c) => `<circle cx="12" cy="12" r="9" fill="none" stroke="${c}" stroke-width="1.8"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/>`,
   pin: (c) => `<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="${c}" stroke-width="1.8"/>`,
 };
 
@@ -263,9 +264,9 @@ export function button(t, link) {
   const w = Math.ceil(48 + labelW + 14 + 16 + 18);
   const h = 48;
   const s = new Svg({ width: w, height: h, title: label });
-  const accent = { linkedin: t.blue, email: t.teal, instagram: t.purple }[link.id];
+  const accent = { portfolio: t.blue, linkedin: t.blue, email: t.teal, instagram: t.purple }[link.id];
   s.add(`<rect x=".75" y=".75" width="${w - 1.5}" height="${h - 1.5}" rx="${h / 2 - 0.75}" fill="${t.surface}" stroke="${t.border}" stroke-width="1.5"/>`);
-  s.add(link.icon === 'mail' ? uiIcon('mail', 19, 14, 20, accent) : brandIcon(link.icon, 20, 15, 18, accent));
+  s.add(link.icon in ICONS ? uiIcon(link.icon, 19, 14, 20, accent) : brandIcon(link.icon, 20, 15, 18, accent));
   s.add(s.text(label, { x: 48, y: 30, weight: 600, size: 16, fill: t.text }));
   s.add(uiIcon('arrow', w - 34, 17, 14, t.muted));
   return s;

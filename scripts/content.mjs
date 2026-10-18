@@ -13,6 +13,7 @@ export const profile = {
 };
 
 export const links = [
+  { id: 'portfolio', label: 'Portfolio', icon: 'globe', href: 'https://bintangfabian.vercel.app' },
   { id: 'linkedin', label: 'LinkedIn', icon: 'linkedin', href: 'https://linkedin.com/in/bintangfabian' },
   { id: 'email', label: 'Email', icon: 'mail', href: 'mailto:bintangalfin33@gmail.com' },
   { id: 'instagram', label: 'Instagram', icon: 'instagram', href: 'https://instagram.com/bintangfabiaan' },
