@@ -389,141 +389,165 @@ export function stackCard(t) {
 const PANEL_H = 220;
 
 const art = {
-  bhumi(s, t, a) {
+  alina(s, t, a) {
     s.css.push(`
-.grow{stroke-dasharray:100;stroke-dashoffset:100;animation:grow 7s ease-in-out infinite}
-@keyframes grow{0%{stroke-dashoffset:100;opacity:1}24%,86%{stroke-dashoffset:0;opacity:1}96%,100%{stroke-dashoffset:0;opacity:0}}
-.leafL{transform-origin:190px 112px;animation:leaf 7s ease-in-out infinite}
-.leafR{transform-origin:191px 96px;animation:leaf 7s ease-in-out infinite}
-@keyframes leaf{0%,22%{transform:scale(0);opacity:0}36%,86%{transform:scale(1);opacity:1}96%,100%{transform:scale(1);opacity:0}}
 .chk{stroke-dasharray:10;stroke-dashoffset:10;animation:chk 7s ease infinite}
-@keyframes chk{0%,30%{stroke-dashoffset:10}38%,88%{stroke-dashoffset:0}96%,100%{stroke-dashoffset:10}}
-.prog{transform-box:fill-box;transform-origin:left center;animation:prog 7s ease-in-out infinite}
-@keyframes prog{0%,30%{transform:scaleX(.22)}60%,90%{transform:scaleX(.68)}100%{transform:scaleX(.22)}}
-@media (prefers-reduced-motion:reduce){.grow,.chk{stroke-dashoffset:0}.prog{transform:scaleX(.68)}}
+@keyframes chk{0%,20%{stroke-dashoffset:10}30%,88%{stroke-dashoffset:0}96%,100%{stroke-dashoffset:10}}
+.ping{transform-box:fill-box;transform-origin:center;animation:ping 2.6s cubic-bezier(0,0,.2,1) infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}80%,100%{transform:scale(2.6);opacity:0}}
+.float{animation:float 5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.chk{stroke-dashoffset:0}}
 `);
+    const dress = (cx, y) => `M${cx - 7} ${y}L${cx - 14} ${y + 6}L${cx - 10} ${y + 13}L${cx - 8} ${y + 12}L${cx - 15} ${y + 40}H${cx + 15}L${cx + 8} ${y + 12}L${cx + 10} ${y + 13}L${cx + 14} ${y + 6}L${cx + 7} ${y}Q${cx} ${y + 6} ${cx - 7} ${y}Z`;
+    const prices = ['Rp 189k', 'Rp 249k', 'Rp 159k'];
     return [
-      `<line x1="110" y1="203" x2="270" y2="203" stroke="${t.border}" stroke-width="1.5" stroke-linecap="round"/>`,
-      `<path d="M190 138C190 118 186 104 191 82" stroke="${t.teal}" stroke-width="3" stroke-linecap="round" fill="none" pathLength="100" class="grow"/>`,
-      `<path d="M190 112C172 110 162 98 164 86C178 85 189 96 190 112Z" fill="${t.teal}" opacity=".9" class="leafL"/>`,
-      `<path d="M191 96C205 86 219 88 224 76C209 70 195 79 191 96Z" fill="${t.teal}" opacity=".9" class="leafR"/>`,
-      `<path d="M150 152H230L221 197Q220 202 215 202H165Q160 202 159 197Z" fill="${a}" fill-opacity=".14" stroke="${a}" stroke-width="1.6" stroke-linejoin="round"/>`,
-      `<rect x="142" y="138" width="96" height="14" rx="5" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
-      `<path d="${sparkle(240, 84, 6)}" fill="${a}" class="tw"/>`,
-      `<rect x="300" y="44" width="212" height="136" rx="14" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
-      s.text('DAY 14 · SEEDLING', { x: 318, y: 70, font: 'mono', weight: 500, size: 13, ls: 1.2, fill: t.text2 }),
-      `<rect x="318" y="82" width="176" height="6" rx="3" fill="${t.border}"/><rect x="318" y="82" width="176" height="6" rx="3" fill="${a}" class="prog"/>`,
-      ...[110, 86, 128].map((bw, i) => {
-        const y = 104 + i * 24;
-        return `<rect x="318" y="${y}" width="14" height="14" rx="4" fill="none" stroke="${t.border}" stroke-width="1.5"/>` +
-          `<path d="M321 ${y + 7}l3 3 6-6" stroke="${a}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" pathLength="10" class="chk" style="${delay(i * 0.7)}"/>` +
-          `<rect x="342" y="${y + 4}" width="${bw}" height="6" rx="3" fill="${t.text2}" opacity=".3"/>`;
+      `<rect x="60" y="64" width="310" height="142" rx="14" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
+      ...[0, 1, 2].map((i) => `<circle cx="${78 + i * 12}" cy="80" r="3.5" fill="${t.border}"/>`),
+      `<rect x="124" y="73" width="150" height="14" rx="7" fill="${t.chip}" stroke="${t.hairline}"/>`,
+      `<line x1="60" y1="95" x2="370" y2="95" stroke="${t.border}" stroke-width="1.2"/>`,
+      ...prices.map((price, i) => {
+        const x = 76 + i * 96;
+        return `<g class="float" style="${delay(i * -1.6)}"><rect x="${x}" y="106" width="86" height="56" rx="9" fill="${a}" fill-opacity=".12"/>` +
+          `<path d="${dress(x + 43, 112)}" fill="${i === 1 ? a : t.text2}" fill-opacity="${i === 1 ? 0.85 : 0.35}" stroke-linejoin="round"/>` +
+          `<rect x="${x}" y="170" width="54" height="6" rx="3" fill="${t.text2}" opacity=".3"/>` +
+          s.text(price, { x, y: 194, weight: 700, size: 12, fill: t.text }) + `</g>`;
+      }),
+      `<circle cx="250" cy="114" r="7" fill="${a}"/><circle cx="250" cy="114" r="7" fill="none" stroke="${a}" class="ping"/>`,
+      `<path d="M247 114h6M250 111v6" stroke="${t.surface}" stroke-width="1.8" stroke-linecap="round"/>`,
+      `<rect x="398" y="72" width="160" height="134" rx="14" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
+      s.text('ORDER #1042', { x: 414, y: 97, font: 'mono', weight: 500, size: 12, ls: 1.2, fill: t.text2 }),
+      `<line x1="421" y1="128" x2="421" y2="172" stroke="${t.border}" stroke-width="1.5" stroke-dasharray="2 3"/>`,
+      ...['PAID · DOKU', 'PACKED', 'SHIPPED'].map((label, i) => {
+        const y = 112 + i * 30;
+        return `<rect x="414" y="${y}" width="14" height="14" rx="4" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>` +
+          `<path d="M417 ${y + 7}l3 3 6-6" stroke="${a}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" pathLength="10" class="chk" style="${delay(i * 0.8)}"/>` +
+          s.text(label, { x: 438, y: y + 11.5, font: 'mono', weight: 500, size: 11, ls: 0.8, fill: t.text2 });
       }),
     ];
   },
 
-  talenta(s, t, a) {
-    const P = 220;
-    const pts = [];
-    for (let x = 0; x <= 2 * P; x += 4) {
-      const m = x % P;
-      const y = 140 + 6 * Math.sin((2 * Math.PI * 6 * x) / P) + 4 * Math.sin((2 * Math.PI * 11 * x) / P + 1) - 20 * Math.exp(-((m - 150) ** 2) / 220);
-      pts.push(`${n(308 + x)},${n(y)}`);
-    }
+  xpresspos(s, t, a) {
     s.css.push(`
-.scroll{animation:scroll 6s linear infinite}
-@keyframes scroll{to{transform:translateX(-${P}px)}}
-.ping{transform-box:fill-box;transform-origin:center;animation:ping 2.6s cubic-bezier(0,0,.2,1) infinite}
-@keyframes ping{0%{transform:scale(1);opacity:.7}80%,100%{transform:scale(3);opacity:0}}
+.print{animation:print 6s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes print{0%,8%{transform:translateY(-130px)}55%,90%{transform:translateY(0)}100%{transform:translateY(-130px)}}
+.tap{transform-box:fill-box;transform-origin:center;animation:tap 3s ease-in-out infinite}
+@keyframes tap{0%,100%{opacity:.25}12%,30%{opacity:.9}}
 .led{animation:led 1.8s ease-in-out infinite}
 @keyframes led{0%,100%{opacity:.35}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.print{transform:none}}
 `);
-    s.defs.push(`<clipPath id="plot"><rect x="308" y="74" width="208" height="100"/></clipPath>`);
+    s.defs.push(`<clipPath id="slot"><rect x="404" y="86" width="140" height="134"/></clipPath>`);
+    const tiles = [];
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        const i = r * 3 + c;
+        const x = 82 + c * 58;
+        const y = 66 + r * 44;
+        tiles.push(`<rect x="${x}" y="${y}" width="50" height="36" rx="8" fill="${a}" fill-opacity=".1" stroke="${t.border}"/>` +
+          `<rect x="${x}" y="${y}" width="50" height="36" rx="8" fill="${a}" fill-opacity=".35" class="tap" style="${delay(i * 0.9 % 3)};opacity:0"/>` +
+          `<rect x="${x + 8}" y="${y + 24}" width="${20 + (i * 7) % 16}" height="5" rx="2.5" fill="${t.text2}" opacity=".45"/>`);
+      }
+    }
     return [
-      `<path d="M0 220V178C60 150 110 92 190 86C240 82 262 120 292 160L320 220Z" fill="${a}" fill-opacity=".1"/>`,
-      `<path d="M0 200C70 170 118 118 188 112C228 109 250 138 276 178" stroke="${a}" stroke-opacity=".45" stroke-width="1.4" stroke-dasharray="4 5" fill="none"/>`,
-      `<path d="M0 214C80 192 130 150 186 140C220 136 238 156 256 190" stroke="${a}" stroke-opacity=".3" stroke-width="1.4" stroke-dasharray="4 5" fill="none"/>`,
-      `<line x1="180" y1="88" x2="180" y2="110" stroke="${t.text2}" stroke-width="1.6"/><rect x="173" y="108" width="14" height="6" rx="2" fill="${t.text2}" opacity=".6"/>`,
-      `<circle cx="180" cy="86" r="6" fill="${a}"/><circle cx="180" cy="86" r="6" fill="none" stroke="${a}" class="ping"/><circle cx="180" cy="86" r="6" fill="none" stroke="${a}" class="ping" style="${delay(1.3)}"/>`,
-      `<rect x="292" y="36" width="240" height="150" rx="14" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
-      s.text('GROUND SENSOR', { x: 310, y: 62, font: 'mono', weight: 500, size: 12, ls: 1.2, fill: t.text2 }),
-      `<rect x="440" y="47" width="76" height="20" rx="10" fill="${a}" fill-opacity=".14"/><circle cx="453" cy="57" r="3.5" fill="${a}" class="led"/>`,
-      s.text('NORMAL', { x: 461, y: 61.5, font: 'mono', weight: 700, size: 11, ls: 0.8, fill: a }),
-      ...[100, 124, 148].map((y) => `<line x1="308" y1="${y}" x2="516" y2="${y}" stroke="${t.hairline}" stroke-width="1.2" stroke-dasharray="2 4"/>`),
-      `<line x1="308" y1="90" x2="516" y2="90" stroke="${a}" stroke-opacity=".5" stroke-dasharray="5 4"/>`,
-      `<g clip-path="url(#plot)"><g class="scroll">`,
-      `<polygon points="308,174 ${pts.join(' ')} ${308 + 2 * P},174" fill="${a}" fill-opacity=".08"/>`,
-      `<polyline points="${pts.join(' ')}" fill="none" stroke="${a}" stroke-width="2" stroke-linejoin="round"/>`,
+      `<rect x="62" y="36" width="304" height="176" rx="16" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
+      s.text('OPEN BILL · T04', { x: 82, y: 56, font: 'mono', weight: 500, size: 11, ls: 1, fill: t.text2 }),
+      `<circle cx="346" cy="52" r="3.5" fill="${t.teal}" class="led"/>`,
+      ...tiles,
+      `<line x1="262" y1="66" x2="262" y2="196" stroke="${t.border}" stroke-width="1.2"/>`,
+      ...[0, 1, 2, 3].map((i) => `<rect x="274" y="${72 + i * 20}" width="${36 + (i * 9) % 20}" height="6" rx="3" fill="${t.text2}" opacity=".3"/><rect x="${336}" y="${72 + i * 20}" width="16" height="6" rx="3" fill="${t.text2}" opacity=".5"/>`),
+      `<rect x="274" y="168" width="78" height="28" rx="8" fill="${a}"/>`,
+      s.text('PAY', { x: 313, y: 186.5, font: 'mono', weight: 700, size: 12, ls: 1.4, anchor: 'middle', fill: t.surface }),
+      `<g clip-path="url(#slot)"><g class="print">`,
+      `<path d="M420 84H528V206L519 212L510 206L501 212L492 206L483 212L474 206L465 212L456 206L447 212L438 206L429 212L420 206Z" fill="${t.surface}" stroke="${t.border}" stroke-width="1.2" stroke-linejoin="round"/>`,
+      s.text('RECEIPT', { x: 474, y: 108, font: 'mono', weight: 700, size: 11, ls: 1.6, anchor: 'middle', fill: t.text2 }),
+      ...[0, 1, 2].map((i) => `<rect x="432" y="${120 + i * 14}" width="${40 + i * 6}" height="5" rx="2.5" fill="${t.text2}" opacity=".3"/><rect x="500" y="${120 + i * 14}" width="16" height="5" rx="2.5" fill="${t.text2}" opacity=".45"/>`),
+      `<line x1="432" y1="168" x2="516" y2="168" stroke="${t.border}" stroke-dasharray="3 3"/>`,
+      s.text('TOTAL', { x: 432, y: 188, font: 'mono', weight: 700, size: 11, ls: 1, fill: t.text }),
+      s.text('86.000', { x: 516, y: 188, font: 'mono', weight: 700, size: 11, anchor: 'end', fill: a }),
       `</g></g>`,
+      `<rect x="404" y="62" width="140" height="28" rx="10" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
+      `<rect x="418" y="82" width="112" height="4" rx="2" fill="${t.border}"/>`,
+      `<circle cx="528" cy="74" r="3.5" fill="${a}" class="led"/>`,
     ];
   },
 
-  byplant(s, t, a) {
+  ams(s, t, a) {
+    s.css.push(`
+.float{animation:float 5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.sign{stroke-dasharray:100;stroke-dashoffset:100;animation:sign 7s ease-in-out infinite}
+@keyframes sign{0%,35%{stroke-dashoffset:100}62%,90%{stroke-dashoffset:0}100%{stroke-dashoffset:100}}
+.stamp{transform-box:fill-box;transform-origin:center;animation:stamp 7s ease infinite}
+@keyframes stamp{0%,62%{opacity:0;transform:rotate(-12deg) scale(1.5)}68%,90%{opacity:1;transform:rotate(-12deg) scale(1)}100%{opacity:0;transform:rotate(-12deg) scale(1)}}
+.led{animation:led 1.8s ease-in-out infinite}
+@keyframes led{0%,100%{opacity:.35}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.sign{stroke-dashoffset:0}.stamp{opacity:1;transform:rotate(-12deg)}}
+`);
+    s.defs.push(packetGlow(a));
+    const orbit = 'M58 132A100 26 0 1 0 258 132A100 26 0 1 0 58 132';
+    return [
+      `<ellipse cx="158" cy="132" rx="100" ry="26" fill="none" stroke="${t.border}" stroke-width="1.4" stroke-dasharray="3 6"/>`,
+      packet(a, orbit, 6, 0),
+      `<g class="float">`,
+      `<path d="M158 58L206 82L158 106L110 82Z" fill="${a}" fill-opacity=".28" stroke="${a}" stroke-width="1.6" stroke-linejoin="round"/>`,
+      `<path d="M110 82L158 106V162L110 138Z" fill="${a}" fill-opacity=".12" stroke="${a}" stroke-width="1.6" stroke-linejoin="round"/>`,
+      `<path d="M206 82L158 106V162L206 138Z" fill="${a}" fill-opacity=".2" stroke="${a}" stroke-width="1.6" stroke-linejoin="round"/>`,
+      `<ellipse cx="182" cy="122" rx="10" ry="12" transform="skewY(-26 182 122)" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
+      `<circle cx="182" cy="120" r="3.5" fill="${a}" class="led"/>`,
+      `</g>`,
+      `<rect x="60" y="182" width="40" height="20" rx="10" fill="${t.raised}" stroke="${t.border}"/>`,
+      s.text('3D', { x: 80, y: 196, font: 'mono', weight: 700, size: 11, ls: 1, anchor: 'middle', fill: t.text2 }),
+      `<rect x="318" y="30" width="200" height="180" rx="14" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
+      s.text('SPH · QUOTATION', { x: 336, y: 56, font: 'mono', weight: 500, size: 12, ls: 1.2, fill: t.text2 }),
+      ...[0, 1, 2].map((i) => `<rect x="336" y="${72 + i * 18}" width="${70 + (i * 23) % 40}" height="6" rx="3" fill="${t.text2}" opacity=".3"/><rect x="466" y="${72 + i * 18}" width="34" height="6" rx="3" fill="${t.text2}" opacity=".5"/>`),
+      `<line x1="336" y1="128" x2="500" y2="128" stroke="${t.border}" stroke-dasharray="3 3"/>`,
+      s.text('TOTAL', { x: 336, y: 146, font: 'mono', weight: 700, size: 11, ls: 1, fill: t.text }),
+      `<rect x="452" y="138" width="48" height="8" rx="4" fill="${a}" opacity=".8"/>`,
+      `<path d="M340 184C350 168 356 170 354 182C352 192 364 172 372 174C378 176 370 188 380 184C388 180 392 176 404 178" stroke="${a}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" pathLength="100" class="sign"/>`,
+      `<line x1="336" y1="192" x2="420" y2="192" stroke="${t.border}" stroke-width="1.2"/>`,
+      `<g class="stamp"><rect x="432" y="166" width="72" height="26" rx="6" fill="none" stroke="${t.teal}" stroke-width="1.8"/>`,
+      s.text('SIGNED', { x: 468, y: 183.5, font: 'mono', weight: 700, size: 11, ls: 1.4, anchor: 'middle', fill: t.teal }), `</g>`,
+    ];
+  },
+
+  sikopas(s, t, a) {
     s.css.push(`
 .flow{stroke-dasharray:2 7;animation:flow 1.4s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-18}}
-.led{animation:led 1.8s ease-in-out infinite}
-@keyframes led{0%,100%{opacity:.35}50%{opacity:1}}
-.gauge{animation:gauge 5s ease-in-out infinite}
-@keyframes gauge{0%,100%{stroke-dasharray:58 100}50%{stroke-dasharray:70 100}}
+.ping{transform-box:fill-box;transform-origin:center;animation:ping 2.6s cubic-bezier(0,0,.2,1) infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}80%,100%{transform:scale(3);opacity:0}}
+.spin{transform-box:fill-box;transform-origin:center;animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.prog{transform-box:fill-box;transform-origin:left center;animation:prog 5s ease-in-out infinite}
+@keyframes prog{0%{transform:scaleX(.1)}70%,100%{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.prog{transform:none}}
 `);
-    s.defs.push(packetGlow(a));
-    const l1 = 'M142 118C188 118 210 122 250 122';
-    const l2 = 'M328 122C352 122 362 116 380 116';
+    const shade = [0.32, 0.16, 0.24, 0.1, 0.2, 0.36, 0.14, 0.28, 0.12, 0.26, 0.18, 0.3];
+    const plots = [];
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 4; c++) {
+        const x = 72 + c * 64 - r * 20;
+        const y = 60 + r * 46;
+        plots.push(`<path d="M${x + 20} ${y}H${x + 78}L${x + 58} ${y + 40}H${x}Z" fill="${a}" fill-opacity="${shade[r * 4 + c]}" stroke="${a}" stroke-opacity=".5" stroke-width="1.2" stroke-linejoin="round"/>` +
+          `<path d="${sparkle(x + 39, y + 20, 5)}" fill="${a}" opacity=".7"/>`);
+      }
+    }
+    const track = 'M70 206C120 196 150 168 196 150C232 136 250 112 254 98';
     return [
-      `<path d="${l1}" stroke="${a}" stroke-opacity=".55" stroke-width="1.5" fill="none" class="flow"/>`,
-      `<path d="${l2}" stroke="${a}" stroke-opacity=".55" stroke-width="1.5" fill="none" class="flow"/>`,
-      packet(a, l1, 2.4, 0.2), packet(a, l2, 1.8, 1.4),
-      `<rect x="64" y="82" width="72" height="72" rx="16" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
-      `<path d="M100 134C86 130 82 116 88 104C100 102 112 110 112 124C110 132 106 134 100 134Z" fill="${a}" opacity=".85"/>`,
-      `<path d="M100 134C99 124 96 116 91 109" stroke="${t.raised}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
-      `<circle cx="125" cy="93" r="3.5" fill="${a}" class="led"/>`,
-      s.text('SENSOR', { x: 100, y: 180, font: 'mono', weight: 500, size: 13, ls: 1.6, anchor: 'middle', fill: t.muted }),
-      `<path d="M258 140H316A16 16 0 0 0 318 108.1A24 24 0 0 0 271.4 101.9A18 18 0 0 0 258 140Z" fill="${t.raised}" stroke="${t.text2}" stroke-opacity=".6" stroke-width="1.5" stroke-linejoin="round"/>`,
-      s.text('MQTT', { x: 289, y: 131, font: 'mono', weight: 700, size: 13, ls: 1.6, anchor: 'middle', fill: t.text2 }),
-      `<rect x="384" y="46" width="148" height="140" rx="16" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>`,
-      `<circle cx="402" cy="66" r="3.5" fill="${a}" class="led"/>`,
-      s.text('LIVE', { x: 412, y: 70.5, font: 'mono', weight: 500, size: 12, ls: 1.6, fill: t.text2 }),
-      `<path d="M412 146A46 46 0 0 1 504 146" stroke="${t.border}" stroke-width="9" stroke-linecap="round" fill="none"/>`,
-      `<path d="M412 146A46 46 0 0 1 504 146" stroke="${a}" stroke-width="9" stroke-linecap="round" fill="none" pathLength="100" stroke-dasharray="64 100" class="gauge"/>`,
-      s.text('64%', { x: 458, y: 142, weight: 700, size: 24, anchor: 'middle', fill: t.text }),
-      s.text('MOISTURE', { x: 458, y: 173, font: 'mono', weight: 500, size: 12, ls: 1.2, anchor: 'middle', fill: t.muted }),
-    ];
-  },
-
-  moneymate(s, t, a) {
-    s.css.push(`
-.seg1{animation:seg1 6s ease-in-out infinite}.seg2{animation:seg2 6s ease-in-out infinite}.seg3{animation:seg3 6s ease-in-out infinite}
-@keyframes seg1{0%{stroke-dasharray:0 100}30%,85%{stroke-dasharray:45 55}100%{stroke-dasharray:0 100}}
-@keyframes seg2{0%,10%{stroke-dasharray:0 100}40%,85%{stroke-dasharray:30 70}100%{stroke-dasharray:0 100}}
-@keyframes seg3{0%,20%{stroke-dasharray:0 100}50%,85%{stroke-dasharray:25 75}100%{stroke-dasharray:0 100}}
-.bar{transform-box:fill-box;transform-origin:center bottom;animation:bar 3.6s ease-in-out infinite}
-@keyframes bar{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
-.float{animation:float 5s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@media (prefers-reduced-motion:reduce){.seg1{stroke-dasharray:45 55}.seg2{stroke-dasharray:30 70}.seg3{stroke-dasharray:25 75}}
-`);
-    const chip = (x, y, label, amount, color, d) => {
-      const w = 26 + measure(label, { weight: 600, size: 13 }) + 14 + measure(amount, { weight: 700, size: 13 }) + 16;
-      return `<g class="float" style="${delay(d)}"><rect x="${x}" y="${y}" width="${n(w)}" height="34" rx="17" fill="${t.raised}" stroke="${t.border}" stroke-width="1.5"/>` +
-        `<circle cx="${x + 16}" cy="${y + 17}" r="4" fill="${color}"/>` +
-        s.text(label, { x: x + 26, y: y + 21.5, weight: 600, size: 13, fill: t.text }) +
-        s.text(amount, { x: x + w - 16, y: y + 21.5, weight: 700, size: 13, anchor: 'end', fill: color }) + `</g>`;
-    };
-    const donut = [[t.purple, 'seg1', 0], [t.blue, 'seg2', -45], [t.teal, 'seg3', -75]];
-    return [
-      chip(70, 70, 'Coffee', '−18k', a, 0),
-      chip(56, 124, 'Transport', '−32k', t.blue, -1.6),
-      `<rect x="250" y="24" width="100" height="224" rx="18" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
-      `<rect x="286" y="32" width="28" height="5" rx="2.5" fill="${t.border}"/>`,
-      s.text('This month', { x: 264, y: 60, weight: 500, size: 11, fill: t.text2 }),
-      s.text('Rp 1.2M', { x: 264, y: 78, weight: 800, size: 15, fill: t.text }),
-      `<circle cx="300" cy="126" r="24" fill="none" stroke="${t.border}" stroke-width="9"/>`,
-      ...donut.map(([c, cls, off]) => `<circle cx="300" cy="126" r="24" fill="none" stroke="${c}" stroke-width="9" pathLength="100" stroke-dashoffset="${off}" transform="rotate(-90 300 126)" class="${cls}"/>`),
-      ...[[t.purple, 172], [t.blue, 192], [t.teal, 212]].map(([c, y]) => `<circle cx="268" cy="${y}" r="5" fill="${c}" opacity=".35"/><rect x="279" y="${y - 3}" width="34" height="6" rx="3" fill="${t.text2}" opacity=".3"/><rect x="320" y="${y - 3}" width="16" height="6" rx="3" fill="${t.text2}" opacity=".5"/>`),
-      s.text('THIS WEEK', { x: 400, y: 66, font: 'mono', weight: 500, size: 12, ls: 1.4, fill: t.muted }),
-      `<line x1="396" y1="178" x2="552" y2="178" stroke="${t.border}" stroke-width="1.5" stroke-linecap="round"/>`,
-      ...[34, 58, 40, 76, 50, 92, 46].map((h, i) => `<rect x="${400 + i * 22}" y="${176 - h}" width="13" height="${h}" rx="4" fill="${a}" opacity="${i === 5 ? 0.9 : 0.3}" class="bar" style="${delay(i * 0.25)}"/>`),
+      ...plots,
+      `<path d="${track}" stroke="${t.text2}" stroke-opacity=".7" stroke-width="1.6" fill="none" class="flow"/>`,
+      `<path d="M254 98c-7-9-11-15-11-20a11 11 0 0 1 22 0c0 5-4 11-11 20z" fill="${t.raised}" stroke="${a}" stroke-width="1.6" stroke-linejoin="round"/>`,
+      `<circle cx="254" cy="78" r="4" fill="${a}"/><circle cx="254" cy="98" r="4" fill="none" stroke="${a}" class="ping"/>`,
+      `<rect x="412" y="20" width="104" height="196" rx="18" fill="${t.raised}" stroke="${a}" stroke-width="1.6"/>`,
+      `<rect x="450" y="28" width="28" height="5" rx="2.5" fill="${t.border}"/>`,
+      s.text('BLOK A12', { x: 426, y: 58, font: 'mono', weight: 700, size: 11, ls: 1, fill: t.text }),
+      s.text('Panen · 1.2 t', { x: 426, y: 76, weight: 500, size: 11, fill: t.text2 }),
+      ...[0, 1, 2].map((i) => `<rect x="426" y="${92 + i * 22}" width="76" height="16" rx="5" fill="${t.chip}" stroke="${t.hairline}"/><circle cx="436" cy="${100 + i * 22}" r="3" fill="${a}" opacity="${0.4 + i * 0.25}"/><rect x="444" y="${98 + i * 22}" width="${30 + i * 8}" height="4" rx="2" fill="${t.text2}" opacity=".35"/>`),
+      `<g transform="translate(-6 0)"><g class="spin"><path d="M434 172a8 8 0 1 1 2.3 5.7" stroke="${a}" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M433 177.5l3.4.4-.4-3.4" stroke="${a}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>`,
+      s.text('SYNC', { x: 450, y: 176, font: 'mono', weight: 700, size: 11, ls: 1.2, fill: t.text2 }),
+      `<rect x="426" y="190" width="76" height="5" rx="2.5" fill="${t.border}"/><rect x="426" y="190" width="76" height="5" rx="2.5" fill="${a}" class="prog"/>`,
+      s.text('OFFLINE-FIRST', { x: 330, y: 206, font: 'mono', weight: 500, size: 10, ls: 1.2, anchor: 'middle', fill: t.muted }),
     ];
   },
 };

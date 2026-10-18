@@ -56,28 +56,28 @@ export const stack = [
 
 export const projects = [
   {
-    id: 'bhumi', name: 'Bhumi', accent: 'blue', kind: 'WEB APP',
-    desc: 'Home-farming kits paired with a step-by-step digital guide, from seeding to the first harvest.',
-    stack: ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'MYSQL'],
-    href: 'https://github.com/bintangfabian/Bhumi', live: 'bhumi-id.vercel.app',
+    id: 'alina', name: 'Alina Official Store', accent: 'blue', kind: 'E-COMMERCE · LIVE',
+    desc: 'Storefront and admin dashboard for a modest-fashion brand, with DOKU payments and Biteship shipping.',
+    stack: ['NEXT.JS', 'REACT', 'CONVEX', 'TAILWIND'],
+    href: 'https://alinaofficial.store', live: 'alinaofficial.store',
   },
   {
-    id: 'talenta', name: 'Talenta Lestari', accent: 'teal', kind: 'MONITORING · IOT',
-    desc: 'Real-time landslide early-detection dashboard for Aribaya Village, fed by field sensors.',
-    stack: ['LARAVEL', 'REACT', 'TYPESCRIPT', 'TAILWIND'],
-    href: 'https://github.com/bintangfabian/Talenta-Lestari',
+    id: 'xpresspos', name: 'XpressPOS', accent: 'purple', kind: 'POINT OF SALE',
+    desc: 'Multi-tenant, multi-store point of sale with open bills and a real-time backend dashboard.',
+    stack: ['FLUTTER', 'LARAVEL FILAMENT', 'REST API', 'MYSQL'],
+    href: 'https://bintangfabian.vercel.app/projects/xpresspos',
   },
   {
-    id: 'byplant', name: 'ByPlant', accent: 'teal', kind: 'IOT · REALTIME',
-    desc: 'Plant monitoring: sensor readings over MQTT, stored in SQLite and streamed live with Socket.io.',
-    stack: ['MQTT', 'EXPRESS', 'SOCKET.IO', 'REACT'],
-    href: 'https://github.com/bintangfabian/byplant-frontend', live: 'byplant.vercel.app',
+    id: 'ams', name: 'AMS Store', accent: 'blue', kind: 'B2B COMMERCE',
+    desc: 'Nurse call catalog with a 3D product viewer, orders and a signed quotation flow with PDF invoices.',
+    stack: ['NEXT.JS', 'NESTJS', 'PRISMA', 'THREE.JS'],
+    href: 'https://bintangfabian.vercel.app/projects/ams-store',
   },
   {
-    id: 'moneymate', name: 'Money Mate', accent: 'purple', kind: 'ANDROID APP',
-    desc: 'Expense tracker to log spending, review history and explore charts, stored offline with Room.',
-    stack: ['KOTLIN', 'ANDROID', 'ROOM', 'MPANDROIDCHART'],
-    href: 'https://github.com/bintangfabian/Money-Mate',
+    id: 'sikopas', name: 'SIKOPAS', accent: 'teal', kind: 'AGRITECH · ERP',
+    desc: 'Oil palm plantation management: Laravel API, web dashboard and an offline-first Flutter field app.',
+    stack: ['LARAVEL', 'FLUTTER', 'POSTGIS', 'REDIS'],
+    href: 'https://bintangfabian.vercel.app/projects/sikopas',
   },
 ];
 
